@@ -10,6 +10,9 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
+GAME_OVER =  pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
+VIDA =  pygame.image.load(os.path.join(IMG_DIR, 'Other/vida.png'))
+
 
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 

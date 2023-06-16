@@ -28,9 +28,11 @@ class EnemyManager:
                 self.enemies.remove(enemy)
                 SOUND = pygame.mixer_music.load(os.path.join(IMG_DIR,'Other/explosion.wav'))
                 SOUND = pygame.mixer.music.play(1)
-                game.playing = False
-                pygame.time.delay(1000)
-                break
+                game.deat_count += 1
+                if game.deat_count >= 3:
+                 game.playing = False
+                 pygame.time.delay(1000)
+                 break
             
 
 

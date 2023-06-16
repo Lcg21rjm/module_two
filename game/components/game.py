@@ -1,11 +1,12 @@
 import os
+import time
 import pygame
 from game.components.bullets.bullet_manager import BulletManager
 from game.components.enemies.enemy_manager import EnemyManager
 from game.components.menu import Menu
 from game.components.spaceship import Spaceship
 
-from game.utils.constants import BG, FONT_STYLE, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, IMG_DIR
+from game.utils.constants import BG, FONT_STYLE, GAME_OVER, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE, IMG_DIR, VIDA
 from game.components.spaceship import Spaceship
 
 class Game:
@@ -29,15 +30,18 @@ class Game:
         self.bullet_manager = BulletManager()
         self.deat_count = 0
         self.score = 0
+        self.intervalo = time.time()
+        self.incremento = 5
+        self.intervalo_se = 5
 
-        self.menu = Menu ('Press Any Key to start...', self.screen)
-
+        self.menu = Menu ('Press TAB to start...', self.screen)
+        
+        
     def execute(self):
         self.running = True
         while self.running:
             if not self.playing:
                 self.show_menu()
-                #implementar
         pygame.display.quit()
         pygame.quit()
 
@@ -52,6 +56,9 @@ class Game:
             self.update()
             self.draw()
         
+        
+        
+
 
     def events(self):
         for event in pygame.event.get():
@@ -79,6 +86,8 @@ class Game:
         #pygame.display.flip()
 
     def draw_background(self):
+        half_creen_width = SCREEN_WIDTH // 2
+        half_creen_height = SCREEN_HEIGHT // 2
         image = pygame.transform.scale(BG, (SCREEN_WIDTH, SCREEN_HEIGHT))
         image_height = image.get_height()
         self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg))
@@ -87,29 +96,60 @@ class Game:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+        if self.deat_count == 0:
+          vida1 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida1, (half_creen_width - 500, half_creen_height - 300))
+          vida2 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida2, (half_creen_width - 480, half_creen_height - 300))
+          vida3 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida3, (half_creen_width - 460, half_creen_height - 300))
+        elif self.deat_count == 1:
+          vida1 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida1, (half_creen_width - 500, half_creen_height - 300))
+          vida2 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida2, (half_creen_width - 480, half_creen_height - 300))
+        elif self.deat_count == 2:
+          vida1 = pygame.transform.scale(VIDA,(20,20))
+          self.screen.blit(vida1, (half_creen_width - 500, half_creen_height - 300))
 
     def show_menu(self):
         half_creen_width = SCREEN_WIDTH // 2
         half_creen_height = SCREEN_HEIGHT // 2
 
         self.menu.reset_screen_color(self.screen)
-        if self.deat_count > 0:
-            self.menu.update_message("Tarea")
+        if self.deat_count >= 3:
+            self.menu.update_message(f"Su Puntaje Fue: {self.score} ")
+            self.deat_count = 0
+            game_over = pygame.transform.scale(GAME_OVER,(250,90))
+            self.screen.blit(game_over, (half_creen_width - 50, half_creen_height - 300))
+            
+            
+            
+            
         icon = pygame.transform.scale(ICON,(80,120))
-        self.screen.blit(icon, (half_creen_width - 50, half_creen_height - 140))
+        self.screen.blit(icon, (half_creen_width - 1, half_creen_height - 140))
         self.menu.draw(self.screen)
         self.menu.update(self)
+        
+
 
     def update_score(self):
-        self.score +=1
+           self.score += 1
+           
+           
 
     def draw_score(self):
+        if time.time() - self.intervalo >= 5:
+          self.score += self.incremento
+          self.intervalo = time.time()
+         
         font = pygame.font.Font(FONT_STYLE, 30)
         text = font.render(f'Score: {self.score}', True, (255,255,255))
         text_rect = text.get_rect()
         text_rect.center = (100, 50)
         self.screen.blit(text, text_rect)
 
+        
     
 
         
