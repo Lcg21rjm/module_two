@@ -45,6 +45,9 @@ class EnemyManager:
             enemy = Enemy()
             self.enemies.append(enemy)
             self.last_enemy_time = time.time()
+
+    def reset(self):
+        self.enemies=[]
             
 
     
