@@ -1,7 +1,7 @@
 import os
 import pygame
 
-from game.utils.constants import IMG_DIR
+from game.utils.constants import IMG_DIR, SHIELD_TYPE
 
 
 class BulletManager:
@@ -26,12 +26,13 @@ class BulletManager:
             bullet.update(self.enemy_bullets)
 
             if bullet.rect.colliderect(game.player.rect) and bullet.owner == 'enemy':
-                game.deat_count += 1
+                if game.player.power_up_type != SHIELD_TYPE:
+                    game.deat_count += 1
+                    if game.deat_count >= 3:
+                        game.playing = False
+                        pygame.time.delay(1000)
+                        break
                 self.enemy_bullets.remove(bullet)
-                if game.deat_count >= 3:
-                 game.playing = False
-                 pygame.time.delay(1000)
-                 break
 
     def draw (self, screen):
         for bullet in self.bullets:

@@ -5,7 +5,7 @@ import time
 import pygame
 
 from game.components.enemies.enemy import Enemy
-from game.utils.constants import IMG_DIR
+from game.utils.constants import IMG_DIR, SHIELD_TYPE
 
 
 
@@ -25,14 +25,15 @@ class EnemyManager:
             enemy.update(self.enemies,game)
 
             if enemy.rect.colliderect(game.player.rect):
+                if game.player.power_up_type != SHIELD_TYPE:
+                    SOUND = pygame.mixer_music.load(os.path.join(IMG_DIR,'Other/explosion.wav'))
+                    SOUND = pygame.mixer.music.play(1)
+                    game.deat_count += 1
+                    if game.deat_count >= 3:
+                        game.playing = False
+                        pygame.time.delay(1000)
+                        break
                 self.enemies.remove(enemy)
-                SOUND = pygame.mixer_music.load(os.path.join(IMG_DIR,'Other/explosion.wav'))
-                SOUND = pygame.mixer.music.play(1)
-                game.deat_count += 1
-                if game.deat_count >= 3:
-                 game.playing = False
-                 pygame.time.delay(1000)
-                 break
             
 
 
@@ -50,6 +51,8 @@ class EnemyManager:
 
     def reset(self):
         self.enemies=[]
+    
+    
             
 
     

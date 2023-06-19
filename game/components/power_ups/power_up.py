@@ -1,7 +1,7 @@
 import random
 from pygame.sprite import Sprite
 
-from game.utils.constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from game.utils.constants import HEART, SCREEN_HEIGHT, SCREEN_WIDTH
 class PowerUp(Sprite):
     def __init__(self, image, type):
         self.image = image
@@ -17,4 +17,4 @@ class PowerUp(Sprite):
             power_ups.remove(self)
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.image , self.rect)
