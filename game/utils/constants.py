@@ -10,7 +10,7 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "Spaceship/spaceship.png"))
-GAME_OVER =  pygame.image.load(os.path.join(IMG_DIR, 'Other/GameOver.png'))
+GAME_OVER =  pygame.image.load(os.path.join(IMG_DIR, 'Other/Game_Over1.png'))
 VIDA =  pygame.image.load(os.path.join(IMG_DIR, 'Other/vida2.png'))
 BALA_POWER =  pygame.image.load(os.path.join(IMG_DIR, 'Other/balapower.png'))
 INICIO =  pygame.image.load(os.path.join(IMG_DIR, 'Other/play.png'))

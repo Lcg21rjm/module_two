@@ -128,9 +128,8 @@ class Game:
 
         self.menu.reset_screen_color(self.screen)
         if self.deat_count >= 3:
-            message = f"Puntuación: {self.score} \n\t" \
-                      f"Maxima puntuación: {self.max_score}"
-            self.menu.update_message( message)
+            self.menu.update_message(f"Puntuación: {self.score} " \
+                                     f"Maxima puntuación: {self.max_score}")
             self.deat_count = 0
 
         icon = pygame.transform.scale(ICON,(80,120))
