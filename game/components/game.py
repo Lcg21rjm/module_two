@@ -32,10 +32,10 @@ class Game:
         self.power_up_manager = PowerUpManager()
         self.deat_count = 0
         self.score = 0
+        self.max_score = 0
         self.intervalo = time.time()
         self.incremento = 5
         self.intervalo_se = 5
-
         self.menu = Menu ('Press TAB to start...', self.screen)
         
         
@@ -116,21 +116,23 @@ class Game:
         elif self.deat_count == 2:
           vida1 = pygame.transform.scale(VIDA,(20,20))
           self.screen.blit(vida1, (half_creen_width - 500, half_creen_height - 300))
+    
+    def check_max_score(self):
+        if self.score > self.max_score:
+            self.max_score = self.score
 
     def show_menu(self):
         half_creen_width = SCREEN_WIDTH // 2
         half_creen_height = SCREEN_HEIGHT // 2
+        self.check_max_score()
 
         self.menu.reset_screen_color(self.screen)
         if self.deat_count >= 3:
-            self.menu.update_message(f"Su Puntaje Fue: {self.score} ")
+            message = f"Puntuación: {self.score} \n\t" \
+                      f"Maxima puntuación: {self.max_score}"
+            self.menu.update_message( message)
             self.deat_count = 0
-            game_over = pygame.transform.scale(GAME_OVER,(250,90))
-            self.screen.blit(game_over, (half_creen_width - 50, half_creen_height - 300))
-            
-            
-            
-            
+
         icon = pygame.transform.scale(ICON,(80,120))
         self.screen.blit(icon, (half_creen_width - 1, half_creen_height - 140))
         self.menu.draw(self.screen)
